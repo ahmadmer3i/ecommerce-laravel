@@ -96,4 +96,10 @@ class CityController extends Controller
         return redirect()->route('admin.cities.index')->with([ 'message' => 'Deleted Successfully',
             'alert-type' => 'success' ]);
     }
+
+    public function get_cities(Request $request)
+    {
+        $states = City::whereStateId($request->state_id)->whereStatus(true)->get([ 'id', 'name' ])->toArray();
+        return response()->json($states);
+    }
 }

@@ -96,4 +96,10 @@ class StateController extends Controller
         return redirect()->route('admin.states.index')->with([ 'message' => 'Deleted Successfully',
             'alert-type' => 'success' ]);
     }
+
+    public function get_states(Request $request)
+    {
+        $states = State::whereCountryId($request->country_id)->get([ 'id', 'name' ])->toArray();
+        return response()->json($states);
+    }
 }
