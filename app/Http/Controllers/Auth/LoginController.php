@@ -21,7 +21,9 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers {
+        logout as protected originalLogout;
+    }
 
     /**
      * Where to redirect users after login.
@@ -50,6 +52,21 @@ class LoginController extends Controller
         if (auth()->user()->roles()->first()->allowed_route != '') {
             return $this->redirectTo = auth()->user()->roles()->first()->allowed_route . '/index';
         }
+    }
+
+    public function logout(Request $request)
+    {
+        $cart = collect($request->session()->get('cart'));
+        /* Call Original Logout */
+        $response = $this->originalLogout($request);
+        /* Repopulate Session with Carts */
+        if (!config('cart.destroy_on_logout')) {
+            $cart->each(function ($rows, $identifier) use ($request) {
+                $request->session()->put('cart' . $identifier, $rows);
+            });
+        }
+        /* Return Original Response */
+        return $request;
     }
 
     protected function loggedOut(Request $request)

@@ -13,6 +13,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -45,19 +46,22 @@
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
-    <script src="{{ asset('js/app.js') }}"></script>
+    <livewire:styles/>
+    @yield('style')
 
 </head>
 <body>
 <div id="app page-holder {{ request()->routeIs('frontend.detail') ? 'bg-light':'' }}">
     @include('partial.frontend.header')
-    @include('partial.frontend.modal')
+    {{--@include('partial.frontend.modal')--}}
+    <livewire:frontend.product-modal-shared/>
 
     <div class="container">
         @yield('content')
     </div>
     @include('partial.frontend.footer')
 </div>
+
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <script src="{{ asset('frontend/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -67,6 +71,7 @@
 <script src="{{ asset('frontend/vendor/owl.carousel2/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('frontend/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js') }}"></script>
 <script src="{{ asset('frontend/js/front.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script>
     // ------------------------------------------------------- //
     //   Inject SVG Sprite -
@@ -120,6 +125,9 @@
 
 </script>
 <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
-
+<livewire:scripts/>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<x-livewire-alert::scripts/>
+@yield('script')
 </body>
 </html>
