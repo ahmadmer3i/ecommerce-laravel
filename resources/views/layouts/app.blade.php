@@ -8,23 +8,25 @@
     <meta name="robots" content="all,follow">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <script defer src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js"></script>
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    {{--    --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
 
     <!-- Lightbox-->
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}">
-    <script src="{{asset('frontend/vendor/jquery/jquery.min.js')}}"></script>
+    {{--    <script src="{{asset('frontend/vendor/jquery/jquery.min.js')}}"></script>--}}
     <link rel="stylesheet" href="{{asset('frontend/vendor/lightbox2/css/lightbox.min.css')}}">
     <!-- Range slider-->
     <link rel="stylesheet" href="{{asset('frontend/vendor/nouislider/nouislider.min.css')}}">
@@ -41,12 +43,17 @@
     <!-- theme stylesheet-->
     <link rel="stylesheet" href="{{ asset('frontend/css/style.default.css') }}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+
+    <style>
+
+    </style>
     <livewire:styles/>
+
     @yield('style')
 
 </head>
@@ -62,16 +69,17 @@
     @include('partial.frontend.footer')
 </div>
 
+<script src="{{ mix('js/app.js') }}"></script>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<script src="{{ asset('frontend/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+{{--<script src="{{ asset('frontend/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>--}}
 <script src="{{ asset('frontend/vendor/lightbox2/js/lightbox.min.js') }}"></script>
 <script src="{{ asset('frontend/vendor/nouislider/nouislider.min.js') }}"></script>
 <script src="{{ asset('frontend/vendor/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('frontend/vendor/owl.carousel2/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('frontend/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js') }}"></script>
 <script src="{{ asset('frontend/js/front.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+@yield('script')
 <script>
     // ------------------------------------------------------- //
     //   Inject SVG Sprite -
@@ -98,7 +106,7 @@
     injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
 
 </script>
-<script>
+{{--<script>
     var range = document.getElementById('range');
     noUiSlider.create(range, {
         range: {
@@ -123,11 +131,14 @@
         }
     });
 
-</script>
-<!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
+</script>--}}
+
 <livewire:scripts/>
+
+<!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"])
 <x-livewire-alert::scripts/>
-@yield('script')
+
 </body>
 </html>

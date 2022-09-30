@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class UserAddress extends Model
@@ -63,5 +64,10 @@ class UserAddress extends Model
     public function defaultAddress(): ?string
     {
         return $this->default_address ? 'Default Address' : null;
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

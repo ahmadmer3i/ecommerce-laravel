@@ -21,7 +21,6 @@ class UserAddressSeeder extends Seeder
     {
 
         Schema::disableForeignKeyConstraints();
-        DB::table('user_addresses')->truncate();
 
         $faker = Factory::create();
 
@@ -57,32 +56,12 @@ class UserAddressSeeder extends Seeder
             'mobile' => $faker->phoneNumber,
             'address' => $faker->address,
             'address2' => $faker->secondaryAddress,
-            'country_id' => $jordan->id,
-            'state_id' => $state,
-            'city_id' => $city,
+            'country_id' => 65,
+            'state_id' => 3223,
+            'city_id' => 149592,
             'zip_code' => $faker->randomNumber(5),
             'po_box' => $faker->randomNumber(4),
         ]);
-
-        User::where('id', '>', 3)->each(function ($user) use ($faker, $jordan, $state, $city) {
-            $state = $jordan->states->random()->id;
-            $city = City::whereStateId($state)->inRandomOrder()->first()->id;
-            $user->addresses()->create([
-                'address_title' => 'Home',
-                'default_address' => true,
-                'first_name' => $faker->firstName,
-                'last_name' => $faker->lastName,
-                'email' => $user->email,
-                'mobile' => $user->mobile,
-                'address' => $faker->address,
-                'address2' => $faker->streetAddress,
-                'country_id' => $jordan->id,
-                'state_id' => $state,
-                'city_id' => $city,
-                'zip_code' => $faker->randomNumber(5),
-                'po_box' => $faker->randomNumber(4),
-            ]);
-        });
         Schema::enableForeignKeyConstraints();
     }
 

@@ -13,7 +13,7 @@
     <title>{{ config('app.name', 'Laravel') }} Dashboard</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,7 +21,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <script src="{{ asset('backend/vendor/jquery/jquery.min.js') }}"></script>
+    {{--    <script src="{{ asset('backend/vendor/jquery/jquery.min.js') }}"></script>--}}
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}">
@@ -36,7 +36,7 @@
         @yield('content')
     </div>
 </div>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 
 <script src="{{ asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 @yield('script')

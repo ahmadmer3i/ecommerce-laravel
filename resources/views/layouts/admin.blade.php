@@ -13,14 +13,16 @@
     <title>{{ config('app.name', 'Laravel') }} Dashboard</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
 
     <link href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
@@ -29,6 +31,8 @@
     <link href="{{ asset('backend/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('backend/vendor/bootstrap-file-input/css/fileinput.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/vendor/summernote/summernote-bs4.min.css') }}">
+    <livewire:styles/>
+
     @yield('style')
 </head>
 <body id="page-top">
@@ -59,7 +63,19 @@
     <!-- Logout Modal-->
     @include('partial.backend.modal')
 </div>
-<script src="{{ asset('backend/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
+
+<script>
+
+
+    // window.Echo.private('App.User.1')
+    //     .notification((notification) => {
+    //         console.log(notification.order);
+    //     });
+
+</script>
+
+{{--<script src="{{ asset('backend/vendor/jquery/jquery.min.js') }}"></script>--}}
 <script src="{{ asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <!-- Core plugin JavaScript-->
@@ -73,7 +89,10 @@
 <script src="{{ asset('backend/vendor/bootstrap-file-input/js/fileinput.min.js') }}"></script>
 <script src="{{ asset('backend/vendor/bootstrap-file-input/themes/fa5/theme.min.js') }}"></script>
 <script src="{{ asset('backend/vendor/summernote/summernote-bs4.min.js') }}"></script>
+<livewire:scripts/>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"])
+<x-livewire-alert::scripts/>
 @yield('script')
-
 </body>
 </html>

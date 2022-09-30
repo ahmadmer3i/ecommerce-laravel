@@ -13,7 +13,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, EntrustUserWithPermissionsTrait, SearchableTrait;
+    use HasFactory, Notifiable, EntrustUserWithPermissionsTrait, SearchableTrait;
 
     public $searchable = [
         'columns' => [
@@ -58,6 +58,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function receivesBroadcastNotificationsOn(): string
+    {
+        return 'App.Models.User.' . $this->id;
+    }
+
     public function getFullNameAttribute(): string
     {
         return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
@@ -76,5 +81,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function addresses(): HasMany
     {
         return $this->hasMany(UserAddress::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

@@ -66,7 +66,7 @@ class LoginController extends Controller
             });
         }
         /* Return Original Response */
-        return $request;
+        return $response;
     }
 
     protected function loggedOut(Request $request)

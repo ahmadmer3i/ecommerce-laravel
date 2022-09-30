@@ -29,5 +29,11 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'paypal' => [
+        'username' => 'paypal-facilitator_api1.al-behar.com',
+        'password' => 'F3HSEL6BDTUJKRNM',
+        'signature' => 'AFcWxV21C7fd0v3bYYYRCpSSRl31APHqeRh77Zt1SaMTOOexcZ.d0W-c',
+        'sandbox' => true
+    ]
 
 ];

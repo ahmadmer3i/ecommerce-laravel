@@ -18,7 +18,7 @@ class ProductCouponSeeder extends Seeder
         ProductCoupon::create([
             'code' => 'AHMAD20',
             'type' => 'fixed',
-            'value' => 200,
+            'value' => 50,
             'description' => 'Discount 20 JOD on your sales on website',
             'use_times' => 20,
             'start_date' => Carbon::now(),

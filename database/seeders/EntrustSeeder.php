@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
-use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -18,7 +17,7 @@ class EntrustSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create();
+
 
         $adminRole = Role::create([
             'name' => 'admin',
@@ -76,20 +75,25 @@ class EntrustSeeder extends Seeder
         ]);
         $customer->attachRole($customerRole);
 
-        for ($i = 1; $i <= 20; $i++) {
-            $randomCustomer = User::create([
-                'first_name' => $faker->firstName,
-                'last_name' => $faker->lastName,
-                'username' => $faker->unique()->userName,
-                'email' => $faker->unique()->safeEmail,
-                'mobile' => '96277' . $faker->numberBetween(1000000, 9999999),
-                'status' => 1,
-                'email_verified_at' => now(),
-                'password' => bcrypt(123123123),
-                'remember_token' => Str::random(10),
-            ]);
-            $randomCustomer->attachRole($customerRole);
-        }
+//        for ($i = 1; $i <= 20; $i++) {
+//            $randomCustomer = User::create([
+//                'first_name' => $faker->firstName,
+//                'last_name' => $faker->lastName,
+//                'username' => $faker->unique()->userName,
+//                'email' => $faker->unique()->safeEmail,
+//                'mobile' => '96277' . $faker->numberBetween(1000000, 9999999),
+//                'status' => 1,
+//                'email_verified_at' => now(),
+//                'password' => bcrypt(123123123),
+//                'remember_token' => Str::random(10),
+//            ]);
+//            $randomCustomer->attachRole($customerRole);
+//        }
+        /*
+         * Create 1000 faker user with their addresses
+         * */
+
+        User::factory()->count(1000)->hasAddresses(1)->create();
 
         $manageMain = Permission::create([
             'name' => 'main',
@@ -675,6 +679,87 @@ class EntrustSeeder extends Seeder
             'sidebar_link' => '1',
             'appear' => '0',
         ]);
+        // ORDERS
+        $manageOrders = Permission::create([
+            'name' => 'manage_orders',
+            'display_name' => 'Orders',
+            'route' => 'orders',
+            'module' => 'orders',
+            'as' => 'orders.index',
+            'icon' => 'fas fa-shopping-basket',
+            'parent' => '0',
+            'parent_original' => '0',
+            'sidebar_link' => '1',
+            'appear' => '1',
+            'ordering' => '45',
+        ]);
+        $manageOrders->parent_show = $manageOrders->id;
+        $manageOrders->save();
+        $showOrders = Permission::create([
+            'name' => 'show_orders',
+            'display_name' => 'Orders',
+            'route' => 'orders',
+            'module' => 'orders',
+            'as' => 'orders.index',
+            'icon' => 'fas fa-shopping-basket',
+            'parent' => $manageOrders->id,
+            'parent_original' => $manageOrders->id,
+            'parent_show' => $manageOrders->id,
+            'sidebar_link' => '1',
+            'appear' => '1',
+        ]);
+        $createOrders = Permission::create([
+            'name' => 'create_orders',
+            'display_name' => 'Create Order',
+            'route' => 'orders',
+            'module' => 'orders',
+            'as' => 'orders.create',
+            'icon' => null,
+            'parent' => $manageOrders->id,
+            'parent_original' => $manageOrders->id,
+            'parent_show' => $manageOrders->id,
+            'sidebar_link' => '1',
+            'appear' => '0',
+        ]);
+        $displayOrders = Permission::create([
+            'name' => 'display_orders',
+            'display_name' => 'Show Order',
+            'route' => 'orders',
+            'module' => 'orders',
+            'as' => 'orders.show',
+            'icon' => null,
+            'parent' => $manageOrders->id,
+            'parent_original' => $manageOrders->id,
+            'parent_show' => $manageOrders->id,
+            'sidebar_link' => '1',
+            'appear' => '0',
+        ]);
+        $updateOrders = Permission::create([
+            'name' => 'update_orders',
+            'display_name' => 'Update Order',
+            'route' => 'orders',
+            'module' => 'orders',
+            'as' => 'orders.edit',
+            'icon' => null,
+            'parent' => $manageOrders->id,
+            'parent_original' => $manageOrders->id,
+            'parent_show' => $manageOrders->id,
+            'sidebar_link' => '1',
+            'appear' => '0',
+        ]);
+        $deleteOrders = Permission::create([
+            'name' => 'delete_orders',
+            'display_name' => 'Delete Order',
+            'route' => 'orders',
+            'module' => 'orders',
+            'as' => 'orders.destroy',
+            'icon' => null,
+            'parent' => $manageOrders->id,
+            'parent_original' => $manageOrders->id,
+            'parent_show' => $manageOrders->id,
+            'sidebar_link' => '1',
+            'appear' => '0',
+        ]);
         // SUPERVISOR
         $manageSupervisors = Permission::create([
             'name' => 'manage_supervisors',
@@ -768,7 +853,7 @@ class EntrustSeeder extends Seeder
             'parent_original' => '0',
             'sidebar_link' => '1',
             'appear' => '1',
-            'ordering' => '40',
+            'ordering' => '45',
         ]);
         $manageCountries->parent_show = $manageCountries->id;
         $manageCountries->save();
@@ -849,7 +934,7 @@ class EntrustSeeder extends Seeder
             'parent_original' => '0',
             'sidebar_link' => '1',
             'appear' => '1',
-            'ordering' => '45',
+            'ordering' => '50',
         ]);
         $manageStates->parent_show = $manageStates->id;
         $manageStates->save();
@@ -930,7 +1015,7 @@ class EntrustSeeder extends Seeder
             'parent_original' => '0',
             'sidebar_link' => '1',
             'appear' => '1',
-            'ordering' => '50',
+            'ordering' => '55',
         ]);
         $manageCities->parent_show = $manageCities->id;
         $manageCities->save();
@@ -1011,7 +1096,7 @@ class EntrustSeeder extends Seeder
             'parent_original' => '0',
             'sidebar_link' => '1',
             'appear' => '1',
-            'ordering' => '55',
+            'ordering' => '60',
         ]);
         $manageShippingCompanies->parent_show = $manageShippingCompanies->id;
         $manageShippingCompanies->save();
@@ -1077,6 +1162,87 @@ class EntrustSeeder extends Seeder
             'parent' => $manageShippingCompanies->id,
             'parent_original' => $manageShippingCompanies->id,
             'parent_show' => $manageShippingCompanies->id,
+            'sidebar_link' => '1',
+            'appear' => '0',
+        ]);
+        // PAYMENT METHODS
+        $managePaymentMethods = Permission::create([
+            'name' => 'manage_payment_methods',
+            'display_name' => 'Payment Methods',
+            'route' => 'payment_methods',
+            'module' => 'payment_methods',
+            'as' => 'payment_methods.index',
+            'icon' => 'fas fa-dollar-sign',
+            'parent' => '0',
+            'parent_original' => '0',
+            'sidebar_link' => '1',
+            'appear' => '1',
+            'ordering' => '100',
+        ]);
+        $managePaymentMethods->parent_show = $managePaymentMethods->id;
+        $managePaymentMethods->save();
+        $showPaymentMethods = Permission::create([
+            'name' => 'show_payment_methods',
+            'display_name' => 'Payment Method',
+            'route' => 'payment_methods',
+            'module' => 'payment_methods',
+            'as' => 'payment_methods.index',
+            'icon' => 'fas fa-dollar-sign',
+            'parent' => $managePaymentMethods->id,
+            'parent_original' => $managePaymentMethods->id,
+            'parent_show' => $managePaymentMethods->id,
+            'sidebar_link' => '1',
+            'appear' => '1',
+        ]);
+        $createPaymentMethods = Permission::create([
+            'name' => 'create_payment_methods',
+            'display_name' => 'Create Payment Method',
+            'route' => 'payment_methods',
+            'module' => 'payment_methods',
+            'as' => 'payment_methods.create',
+            'icon' => null,
+            'parent' => $managePaymentMethods->id,
+            'parent_original' => $managePaymentMethods->id,
+            'parent_show' => $managePaymentMethods->id,
+            'sidebar_link' => '1',
+            'appear' => '0',
+        ]);
+        $displayPaymentMethods = Permission::create([
+            'name' => 'display_payment_methods',
+            'display_name' => 'Show Payment Method',
+            'route' => 'payment_methods',
+            'module' => 'payment_methods',
+            'as' => 'payment_methods.show',
+            'icon' => null,
+            'parent' => $managePaymentMethods->id,
+            'parent_original' => $managePaymentMethods->id,
+            'parent_show' => $managePaymentMethods->id,
+            'sidebar_link' => '1',
+            'appear' => '0',
+        ]);
+        $updatePaymentMethods = Permission::create([
+            'name' => 'update_payment_methods',
+            'display_name' => 'Update Payment Method',
+            'route' => 'payment_methods',
+            'module' => 'payment_methods',
+            'as' => 'payment_methods.edit',
+            'icon' => null,
+            'parent' => $managePaymentMethods->id,
+            'parent_original' => $managePaymentMethods->id,
+            'parent_show' => $managePaymentMethods->id,
+            'sidebar_link' => '1',
+            'appear' => '0',
+        ]);
+        $deletePaymentMethods = Permission::create([
+            'name' => 'delete_payment_methods',
+            'display_name' => 'Delete Payment Method',
+            'route' => 'payment_methods',
+            'module' => 'payment_methods',
+            'as' => 'payment_methods.destroy',
+            'icon' => null,
+            'parent' => $managePaymentMethods->id,
+            'parent_original' => $managePaymentMethods->id,
+            'parent_show' => $managePaymentMethods->id,
             'sidebar_link' => '1',
             'appear' => '0',
         ]);

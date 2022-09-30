@@ -24,9 +24,8 @@ class Roles
             if (!in_array($route[ 0 ], $this->roleRoutes())) {
                 return $next($request);
             } else {
-                if ($route[ 0 ] != $this->userRoute()) {
-                    $path = $route[ 0 ] == auth()->user()
-                        ->roles[ 0 ]->allowed_route ? $route[ 0 ] . '.' . '.login' : '' . $this->userRoute() . '.index';
+                if ($route[ 0 ] != $this->userRoutes()) {
+                    $path = $route[ 0 ] == $this->userRoutes() ? $route[ 0 ] . '.login' : '' . $this->userRoutes() . '.index';
                     return redirect()->route($path);
                 } else {
                     return $next($request);
@@ -34,7 +33,7 @@ class Roles
             }
         } else {
             $routeDestination = in_array($route[ 0 ], $this->roleRoutes()) ? $route[ 0 ] . '.login' : 'login';
-            $path = $route[ 0 ] != '' ? $routeDestination : $this->userRoute() . '.index';
+            $path = $route[ 0 ] != '' ? $routeDestination : $this->userRoutes() . '.index';
             return redirect()->route($path);
         }
     }
@@ -50,7 +49,7 @@ class Roles
         return Cache::get('role_routes');
     }
 
-    protected function userRoute()
+    protected function userRoutes()
     {
         if (!Cache::has('user_routes')) {
             Cache::forever('user_routes', auth()->user()->roles[ 0 ]->allowed_route);
