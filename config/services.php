@@ -30,10 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     'paypal' => [
-        'username' => 'paypal-facilitator_api1.al-behar.com',
-        'password' => 'F3HSEL6BDTUJKRNM',
-        'signature' => 'AFcWxV21C7fd0v3bYYYRCpSSRl31APHqeRh77Zt1SaMTOOexcZ.d0W-c',
-        'sandbox' => true
+        'username' => env('PAYPAL_USERNAME'),
+        'password' => env('PAYPAL_PASSWORD'),
+        'signature' => env('PAYPAL_SIGNATURE'),
+        'sandbox' => env('PAYPAL_SANDBOX')
     ]
 
 ];
