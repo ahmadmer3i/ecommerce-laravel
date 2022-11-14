@@ -69,7 +69,7 @@ class OrderController extends Controller
         if (!auth()->user()->ability('admin', 'update_orders')) {
             return redirect('admin/index');
         }
-//        return view('backend.orders.edit', compact('order'));
+//      return view('backend.orders.edit', compact('order'));
     }
 
     public function update(Request $request, Order $order)

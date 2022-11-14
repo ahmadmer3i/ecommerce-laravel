@@ -55,7 +55,7 @@ class ProductController extends Controller
                 $file_type = $image->getMimeType();
                 $path = public_path('assets/products/' . $file_name);
 
-                Image::make($image->getRealPath())->resize(500, null, function ($constraint) {
+                Image::make($image->getRealPath())->resize(500, null, static function ($constraint) {
                     $constraint->aspectRatio();
                 })->save($path, 100);
                 $product->media()->create([
